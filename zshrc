@@ -16,12 +16,15 @@ ZSH=$HOME/.oh-my-zsh
 ##ZSH_THEME="robbyrussell"
 ##ZSH_THEME="steeef"
 ##ZSH_THEME="zeta"
-##ZSH_THEME="bullet-train"
-if [ -z $COLORTERM ]; then
-	ZSH_THEME="robbyrussell"
-else
-	ZSH_THEME="bullet-train"
-fi
+#ZSH_THEME="bullet-train"
+## ZSH_THEME="refined"
+## if [ -z $COLORTERM ]; then
+## 	ZSH_THEME="robbyrussell"
+## else
+## 	# ZSH_THEME="bullet-train"
+## 	ZSH_THEME="refined"
+## fi
+ZSH_THEME="robbyrussell"
 
 BULLET_PROMPT_ORDER=(
 context
@@ -39,6 +42,7 @@ virtualenv
 BULLETTRAIN_CONTEXT_BG="default"
 BULLETTRAIN_DIR_BG="default"
 BULLETTRAIN_DIR_FG="default"
+BULLETTRAIN_DIR_EXTENDED=0
 
 #export BULLETTRAIN_PROMPT_ORDER=(${BULLETTRAIN_PROMPT_ORDER:#(nvm)})
 
@@ -111,3 +115,5 @@ setopt HIST_IGNORE_ALL_DUPS
 setopt    appendhistory     #Append history to the history file (no overwriting)
 setopt    sharehistory      #Share history across terminals
 setopt    incappendhistory  #Immediately append to the history file, not just when a term is killed
+
+#alias macvim='/Applications/MacVim.app/Contents/MacOS/Vim -g'

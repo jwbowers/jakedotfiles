@@ -21,51 +21,58 @@ let g:tex_flavor='latex'
 " let g:vimrplugin_insert_mode_cmds = 0
 
 "Latex-box
-let g:LatexBox_viewer='open -a Skim'
-let g:LatexBox_latexmk_options='--shell-escape'
+" let g:LatexBox_viewer='open -a Skim'
+" let g:LatexBox_latexmk_options='--shell-escape'
 
 "vimtex
 " Turn off continuous compilation by default
 " let g:vimtex_latexmk_continuous=0
-let g:vimtex_compiler_latexmk = {
-        \ 'backend' : 'process',
-        \ 'background' : 1,
-        \ 'build_dir' : '',
-        \ 'callback' : 1,
-        \ 'continuous' : 0,
-        \ 'executable' : 'latexmk',
-        \ 'options' : [
-        \   '-pdf',
-        \   '-verbose',
-        \   '-file-line-error',
-        \   '-synctex=1',
-        \   '-interaction=nonstopmode',
-        \ ],
-        \}
-" Allow compilation in the background
-let g:vimtex_latexmk_background=1
-let g:vimtex_latexmk_options= '-verbose -pdf -file-line-error -synctex=1 -interaction=nonstopmode -shell-escape'
-let g:vimtex_quickfix_warnings = {
-          \ 'Overfull' : 0,
-          \ 'Underfull' : 0,
+" let g:vimtex_compiler_latexmk = {
+"         \ 'backend' : 'process',
+"         \ 'background' : 1,
+"         \ 'build_dir' : '',
+"         \ 'callback' : 1,
+"         \ 'continuous' : 0,
+"         \ 'executable' : 'latexmk',
+"         \ 'options' : [
+"         \   '-pdf',
+"         \   '-verbose',
+"         \   '-file-line-error',
+"         \   '-synctex=1',
+"         \   '-interaction=nonstopmode',
+"         \ ],
+"         \}
+" " Allow compilation in the background
+" let g:vimtex_latexmk_background=1
+" let g:vimtex_latexmk_options= '-verbose -pdf -file-line-error -synctex=1 -interaction=nonstopmode -shell-escape'
+let g:vimtex_quickfix_latexlog = {
+          \ 'overfull' : 0,
+          \ 'underfull' : 0,
           \ 'packages' : {
           \   'default' : 0,
           \ },
-          \ 'overfull' : 0,
-          \ 'underfull' : 0,
           \}
-let g:vimtex_quickfix_ignored_warnings = [
-        \  'Underfull',
-         \ 'Overfull',
-         \ 'specifier changed to',
-       \ ]
-
-
-let g:vimtex_view_general_viewer
-      \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-let g:vimtex_view_general_options = '-r @line @pdf @tex'
-let g:vimtex_latexmk_callback_hooks = ['UpdateSkim']
-let g:vimtex_complete_recursive_bib = 1
+" let g:vimtex_quickfix_warnings = {
+"           \ 'Overfull' : 0,
+"           \ 'Underfull' : 0,
+"           \ 'packages' : {
+"           \   'default' : 0,
+"           \ },
+"           \ 'overfull' : 0,
+"           \ 'underfull' : 0,
+"           \}
+" let g:vimtex_quickfix_ignored_warnings = [
+"         \  'Underfull',
+"          \ 'Overfull',
+"          \ 'specifier changed to',
+"        \ ]
+" let g:vimtex_quickfix_ignore_all_warnings = 0
+" let g:vimtex_log_ignore = ['overfull','underfull']
+" let g:vimtex_view_general_viewer
+"      \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+" let g:vimtex_view_general_options = '-r @line @pdf @tex'
+" let g:vimtex_latexmk_callback_hooks = ['UpdateSkim']
+" let g:vimtex_complete_recursive_bib = 1
 
 function! UpdateSkim(status)
   if !a:status | return | endif
@@ -186,21 +193,14 @@ filetype plugin on
 " let maplocalleader = ","
 set timeoutlen=500
 
-" Syntastic
-" let g:syntastic_enable_r_lintr_checker = 1
-" let g:syntastic_r_checkers = 1
-" let g:syntastic_r_lintr_linters = "with_defaults(line_length_linter = line_length_linter(120), camel_case_linter=NULL, snake_case_linter=NULL, closed_curly_linter=closed_curly_linter(allow_single_line = TRUE), open_curly_linter=open_curly_linter(allow_single_line = TRUE), commented_code_linter=NULL)"
-"
-
-
 "ale
 let g:ale_r_lintr_options = "with_defaults(line_length_linter = line_length_linter(120), camel_case_linter=NULL, snake_case_linter=NULL, closed_curly_linter=closed_curly_linter(allow_single_line = TRUE), open_curly_linter=open_curly_linter(allow_single_line = TRUE), commented_code_linter=NULL)"
 
 let g:ale_linters = {
-\   'tex': ['write-good','lacheck'],
+\   'tex': ['write-good','proselint','lacheck'],
 \}
 
-let g:ale_writegood_options = " writeGood('evaluate', { weasel-words: false, tooWordy: false}); "
+"let g:ale_writegood_options = " writeGood('evaluate', { weasel-words: false, tooWordy: false}); "
 
 "vim-airline
 " Plugin 'vim-airline/vim-airline'
@@ -209,17 +209,17 @@ let g:airline#extensions#tabline#enabled = 1
 
 " from
 " http://stackoverflow.com/questions/30443836/install-vim-via-homebrew-with-python-and-python3-support
-if has('python')
-	let g:jedi#force_py_version = 2
-	let g:syntastic_python_python_exec = 'python2'
-	let g:pymode_python = 'python2'
-elseif has('python3')
-	let g:jedi#force_py_version = 3
-	let g:syntastic_python_python_exec = 'python3'
-	let g:pymode_python = 'python3'
-else
-	let g:loaded_jedi = 1
-endif
+ if has('python')
+ 	let g:jedi#force_py_version = 2
+ 	let g:syntastic_python_python_exec = 'python2'
+ 	let g:pymode_python = 'python2'
+ elseif has('python3')
+ 	let g:jedi#force_py_version = 3
+ 	let g:syntastic_python_python_exec = 'python3'
+ 	let g:pymode_python = 'python3'
+ else
+ 	let g:loaded_jedi = 1
+ endif
 
 " vim-markdown
 autocmd BufNewFile,BufReadPost *.md set filetype=markdown
