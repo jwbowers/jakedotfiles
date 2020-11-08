@@ -1,296 +1,293 @@
-runtime bundle/vim-pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
-"set runtimepath=~/.vim,$VIMRUNTIME,~/.vim/after
-syntax on
-syntax enable
+" Load all plugins now.
+execute pathogen#infect()
+colorscheme solarized8_flat
+"execute pathogen#helptags()
+" from https://stackoverflow.com/questions/33380451/is-there-a-difference-between-syntax-on-and-syntax-enable-in-vimscript
 filetype plugin indent on
+if !exists("g:syntax_on")
+    syntax enable
+endif
+" syntax on
+" syntax enable
 " set grepprg=grep\ -nH\ $*
+set belloff=all
+
+"Highlight search results
+set hlsearch
+" By default make searching case insensitive
+set ignorecase
+" Make them case sensitive if the search involves a capital letter
+set smartcase
+" https://vi.stackexchange.com/questions/4141/how-to-indent-as-spaces-instead-of-tab
+" tabstop:          Width of tab character
+" softtabstop:      Fine tunes the amount of white space to be added
+" shiftwidth        Determines the amount of whitespace to add in normal mode
+" expandtab:        When on uses space instead of tabs
+set tabstop     =4
+set softtabstop =4
+set shiftwidth  =4
+set expandtab
+
+"Nvim-R
+let R_assign = 0
+" set vim-r-plugin to
+let r_indent_align_args = 0
+" let R_debug = 0
+
+" Set vim-r-plugin to mimics ess :
+let r_indent_ess_comments = 0
+let r_indent_ess_compatible = 0
+let R_app = "radian"
+let R_cmd = "R"
+let R_hl_term = 0
+let R_args = []  " if you had set any
+let R_bracketed_paste = 1
 
 
-set ruler
-" set gfn=Source\ Code\ Pro:h16
-" set gfn=Meslo\ LG\ S\ Regular\ for\ Powerline:h16
+"deoplete
+"https://gitter.im/Shougo/deoplete.nvim?at=5d599499bfd2887f53133985
+" let g:deoplete#enable_at_startup = 0
+" enable at start-up
+" let g:deoplete#enable_at_startup = 1
+"
+" " only show popup upon request
+" let g:deoplete#disable_auto_complete = 1
+"
+" " use <tab> / <s-tab> to cycle through completions
+" function! s:check_back_space() abort "{{{
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~ '\s'
+" endfunction"}}}
+"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ deoplete#manual_complete()
+"
+" inoremap <silent><expr><S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
+"
+" " automatically select the first match
+" set completeopt+=noinsert
+"
+" " don't insert a newline when selecting with <Enter>
+" inoremap <expr> <CR> (pumvisible() ? "\<c-y>" : "\<CR>")
+"
+" " matchers
+" " head   - exact matches
+" " length - don't show typed word
+" call deoplete#custom#source('_', 'matchers', ['matcher_head', 'terminal', 'matcher_length'])
+"
+" " sort results alphabetically
+" call deoplete#custom#source('_', 'sorters', ['sorter_word'])
 
-" Vim-LaTeX-Suite
-let g:tex_flavor='latex'
-" let g:Tex_DefaultTargetFormat = 'pdf'
-" let g:Tex_CompileRule_pdf = 'latexmk -pdf -f $*'
-" let g:Tex_ViewRule_pdf = 'open -a Skim'
-" set iskeyword+=:
-" let g:vimrplugin_insert_mode_cmds = 0
+"ale
 
-"Latex-box
-" let g:LatexBox_viewer='open -a Skim'
-" let g:LatexBox_latexmk_options='--shell-escape'
+" let g:ale_r_lintr_options = 'with_defaults(line_length_linter = line_length_linter(120), camel_case_linter=FALSE, snake_case_linter=TRUE, closed_curly_linter=closed_curly_linter(allow_single_line = TRUE), open_curly_linter=open_curly_linter(allow_single_line = TRUE), commented_code_linter=NULL)'
+" let g:ale_r_lintr_options = 'with_defaults(line_length_linter = line_length_linter(120) )'
+"
+" "let g:ale_writegood_options
+" let g:ale_linters = {}
+" let g:ale_linters.tex =  ['write-good','proselint','lacheck']
+" let g:ale_linters.Rmd = ['write-good','proselint']
+" let g:ale_linters.rmd = ['write-good','proselint']
+"
+" " disable ale completion in favor of deoplete
+" let g:ale_completion_enabled = 1
+" let g:ale_linter_aliases = {'rmd': ['rmd', 'r', 'markdown']}
 
-"vimtex
-" Turn off continuous compilation by default
-" let g:vimtex_latexmk_continuous=0
-" let g:vimtex_compiler_latexmk = {
-"         \ 'backend' : 'process',
-"         \ 'background' : 1,
-"         \ 'build_dir' : '',
-"         \ 'callback' : 1,
-"         \ 'continuous' : 0,
-"         \ 'executable' : 'latexmk',
-"         \ 'options' : [
-"         \   '-pdf',
-"         \   '-verbose',
-"         \   '-file-line-error',
-"         \   '-synctex=1',
-"         \   '-interaction=nonstopmode',
-"         \ ],
-"         \}
-" " Allow compilation in the background
-" let g:vimtex_latexmk_background=1
-" let g:vimtex_latexmk_options= '-verbose -pdf -file-line-error -synctex=1 -interaction=nonstopmode -shell-escape'
-let g:vimtex_quickfix_latexlog = {
-          \ 'overfull' : 0,
-          \ 'underfull' : 0,
-          \ 'packages' : {
-          \   'default' : 0,
-          \ },
-          \}
-" let g:vimtex_quickfix_warnings = {
-"           \ 'Overfull' : 0,
-"           \ 'Underfull' : 0,
-"           \ 'packages' : {
-"           \   'default' : 0,
-"           \ },
-"           \ 'overfull' : 0,
-"           \ 'underfull' : 0,
-"           \}
-" let g:vimtex_quickfix_ignored_warnings = [
-"         \  'Underfull',
-"          \ 'Overfull',
-"          \ 'specifier changed to',
-"        \ ]
-" let g:vimtex_quickfix_ignore_all_warnings = 0
-" let g:vimtex_log_ignore = ['overfull','underfull']
-" let g:vimtex_view_general_viewer
-"      \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
-" let g:vimtex_view_general_options = '-r @line @pdf @tex'
-" let g:vimtex_latexmk_callback_hooks = ['UpdateSkim']
-" let g:vimtex_complete_recursive_bib = 1
+" vimtex
+" Disable overfull/underfull \hbox and all package warnings
+" let g:vimtex_quickfix_latexlog = {
+" 			\ 'overfull' : 0,
+" 			\ 'underfull' : 0,
+" 			\ 'packages' : {
+" 			\   'default' : 0,
+" 			\ },
+" 			\}
+let g:vimtex_quickfix_open_on_warning = 0
+let g:vimtex_view_general_viewer
+              \ = '/Applications/Skim.app/Contents/SharedSupport/displayline'
+let g:vimtex_view_general_options = '-r @line @pdf @tex'
+let g:tex_flavor = 'latex'
+"airline
+let g:airline_powerline_fonts = 1
+set guifont=Meslo\ LG\ M\ DZ\ for\ Powerline
 
-function! UpdateSkim(status)
-  if !a:status | return | endif
+" https://coderwall.com/p/yiot4q/setup-vim-powerline-and-iterm2-on-mac-os-x
+" set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+" let g:Powerline_symbols = 'fancy'
+" set encoding=utf-8
+" set t_Co=256
+" set fillchars+=stl:\ ,stlnc:\
+" set termencoding=utf-8
+if has("gui_running")
+	autocmd GUIEnter * set vb t_vb=
+"    let s:uname = system("uname")
+"    if s:uname == "Darwin\n"
+"       set guifont=Source\ Code\ Pro\ for\ Powerline:h16
+"    endif
+endif
+"
+" Trying to stop some annoying highlighting of underscores
+" autocmd *.Rmd,*.rmd set filetype=markdown
+" syn match markdownIgnore "\$x_i\$"
+" autocmd BufNewFile,BufRead,BufEnter *.Rmd,*.rmd :syn match markdownIgnore "\$.*_.*\$"
+" for vim-markdown
+" https://github.com/plasticboy/vim-markdown
+let g:vim_markdown_math = 1
 
-  let l:out = b:vimtex.out()
-  let l:tex = expand('%:p')
-  let l:cmd = [g:vimtex_view_general_viewer, '-r']
-  if !empty(system('pgrep Skim'))
-    call extend(l:cmd, ['-g'])
-  endif
-  if has('nvim')
-    call jobstart(l:cmd + [line('.'), l:out, l:tex])
-  elseif has('job')
-    call job_start(l:cmd + [line('.'), l:out, l:tex])
+" coc stuff from https://github.com/neoclide/coc.nvim
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" function! s:check_back_space() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+if has('patch8.1.1068')
+  " Use `complete_info` if your (Neo)Vim version supports it.
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  imap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
   else
-    call system(join(l:cmd + [line('.'),
-          \ shellescape(l:out), shellescape(l:tex)], ' '))
+    call CocAction('doHover')
   endif
 endfunction
 
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
 
-" Colors
-" set t_Co=16
-" set t_Co=256
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
 
-if has('nvim') || has('termguicolors')
-  set termguicolors
-endif
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
 
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
 
-if has('gui_running')
-	" colorscheme solarized
-  colorscheme NeoSolarized
-endif
-set background=dark
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
 
-" set term=screen-256color
-" Solarized
-" set background=light
-" set background=dark
-" colorscheme monokai
-" colorscheme zenburn
-" colorscheme solarized
-" option name default | optional
-" ------------------------------------------------
-"  g:solarized_termcolors= 16 | 256
-"  g:solarized_termtrans = 0 | 1
-"  g:solarized_degrade = 0 | 1
-"  g:solarized_bold = 1 | 0
-"  g:solarized_underline = 1 | 0
-"  g:solarized_italic =   1 | 0
-"  g:solarized_contrast = "normal"| "high" or "low"
-"  g:solarized_visibility= "normal"| "high" or "low"
-"  ------------------------------------------------
-let g:solarized_contrast = "normal"
-let g:solarized_termcolors= 256
-let g:solarized_visibility= "normal"
-let g:solarized_termtrans = 1
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
 
-autocmd BufRead *.txt set tw=78 spell
-autocmd BufRead *.tex set tw=78 spell
-autocmd BufRead *.Rnw set tw=78 " spell
-autocmd BufRead *.Rmd set tw=78 " spell
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
 
-" TeX
-" " Fix F9 mapping on MacBook from
-" http://2manyvariables.inmachina.com/2009/07/vim-latex-suite-and-os-x/
-"autocmd FileType tex imap <buffer> <M-TAB> <Plug>Tex_Completion
-"autocmd FileType tex setlocal shiftwidth=2 tabstop=2 expandtab
-"autocmd FileType Rnw setlocal shiftwidth=2 tabstop=2 expandtab
-"autocmd FileType Rmd setlocal shiftwidth=2 tabstop=2 expandtab
-"autocmd FileType R setlocal shiftwidth=2 tabstop=2 expandtab
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
 
-" set expandtab
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 
-" make hjkl movements accessible from insert mode via the <Alt> modifier key
-" http://stackoverflow.com/questions/1737163/vim-traversing-text-in-insert-mode
-" inoremap <A-h> <C-o>h
-" inoremap <A-j> <C-o>j
-" inoremap <A-k> <C-o>k
-" inoremap <A-l> <C-o>l
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
-" :fixdel
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
-" Vim-R-Plugin
-" let vimrplugin_term_cmd = "/Applications/iTerm.app/Contents/MacOS/iTerm -t R"
-" let vimrplugin_term = "/Applications/Utilities/Terminal.app/Contents/MacOS/Terminal"
-" let r_indent_ess_compatible = 1
-" let vimrplugin_applescript = 0
-" let vimrplugin_screenplugin = 0
-" Nvim-R
-" let R_in_buffer = 0
-" let R_applescript = 0
-" let R_source = '~/.vim/bundle/Nvim-R/R/tmux_split.vim'
-" let R_tmux_title = "automatic"
-" Disable auto conversion of _ to <-
-let R_assign = 0
-let R_notmuxconf = 1
-" R output is highlighted with current colorscheme
-let g:rout_follow_colorscheme = 1
-" R commands in R output are highlighted
-let g:Rout_more_colors = 1
-" autocmd TerminalOpen * setlocal nonumber
-let R_esc_term = 0
-" let R_in_buffer = 0
+" Mappings using CoCList:
+" Show all diagnostics.
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-" Clipboard
-set clipboard=unnamed
-if $TMUX == ''
-	set clipboard+=unnamed
-endif
+set rtp+=/usr/local/opt/fzf
 
-" Lines added by the Vim-R-plugin command :RpluginConfig (2014-May-27 09:10):
-set nocompatible
-filetype plugin on
-" Change the <LocalLeader> key:
-" let maplocalleader = ","
-set timeoutlen=500
-
-"ale
-let g:ale_r_lintr_options = "with_defaults(line_length_linter = line_length_linter(120), camel_case_linter=NULL, snake_case_linter=NULL, closed_curly_linter=closed_curly_linter(allow_single_line = TRUE), open_curly_linter=open_curly_linter(allow_single_line = TRUE), commented_code_linter=NULL)"
-
-let g:ale_linters = {
-\   'tex': ['write-good','proselint','lacheck'],
-\}
-
-"let g:ale_writegood_options = " writeGood('evaluate', { weasel-words: false, tooWordy: false}); "
-
-"vim-airline
-" Plugin 'vim-airline/vim-airline'
-" Plugin 'vim-airline/vim-airline-themes'
-let g:airline#extensions#tabline#enabled = 1
-
-" from
-" http://stackoverflow.com/questions/30443836/install-vim-via-homebrew-with-python-and-python3-support
- if has('python')
- 	let g:jedi#force_py_version = 2
- 	let g:syntastic_python_python_exec = 'python2'
- 	let g:pymode_python = 'python2'
- elseif has('python3')
- 	let g:jedi#force_py_version = 3
- 	let g:syntastic_python_python_exec = 'python3'
- 	let g:pymode_python = 'python3'
- else
- 	let g:loaded_jedi = 1
- endif
-
-" vim-markdown
-autocmd BufNewFile,BufReadPost *.md set filetype=markdown
-let g:markdown_fenced_languages = ['html', 'r', 'python', 'bash=sh']
-" let g:markdown_folding = 1
-
-" configuration for vim-pandoc and vim-rmarkdown
-" let g:pandoc#modules#disabled = ["folding", "spell"]
-let g:pandoc#syntax#conceal#use = 0
-
-
-" Tab switching
-" https://superuser.com/questions/382060/shortcut-to-switch-tabs-in-macvim
-if has("gui_macvim")
-  " Press Ctrl-Tab to switch between open tabs (like browser tabs) to 
-  " the right side. Ctrl-Shift-Tab goes the other way.
-  noremap <C-Tab> :tabnext<CR>
-  noremap <C-S-Tab> :tabprev<CR>
-
-  " Switch to specific tab numbers with Command-number
-  noremap <D-1> :tabn 1<CR>
-  noremap <D-2> :tabn 2<CR>
-  noremap <D-3> :tabn 3<CR>
-  noremap <D-4> :tabn 4<CR>
-  noremap <D-5> :tabn 5<CR>
-  noremap <D-6> :tabn 6<CR>
-  noremap <D-7> :tabn 7<CR>
-  noremap <D-8> :tabn 8<CR>
-  noremap <D-9> :tabn 9<CR>
-  " Command-0 goes to the last tab
-  noremap <D-0> :tablast<CR>
-endif
-
-" Turn off bells
-set noerrorbells
-set vb t_vb=
-
-" Make vimdiff wrap text
-au VimEnter * if &diff | execute 'windo set wrap' | endif
-autocmd FilterWritePre * if &diff | setlocal wrap< | endif
-
-" Load all plugins now.
-" Plugins need to be added to runtimepath before helptags can be generated.
-packloadall
-" Load all of the helptags now, after plugins have been loaded.
-" All messages and errors will be ignored.
-silent! helptags ALL
-" set Vim-specific sequences for RGB colors
-let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-
-" from https://realpython.com/vim-and-python-a-match-made-in-heaven/
-set foldmethod=indent
-set foldlevel=99
-" Enable folding with the spacebar
-nnoremap <space> za
-
-let g:SimpylFold_docstring_preview=1
-
-" PEP 8 indentation
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
-
-
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-
-" In general wrap at 80 columns
-set textwidth=80
+" https://coderwall.com/p/lxajqq/vim-function-to-unminify-javascript
+" Simple re-format for minified Javascript
+command! UnMinify call UnMinify()
+function! UnMinify()
+    %s/{\ze[^\r\n]/{\r/g
+    %s/){/) {/g
+    %s/};\?\ze[^\r\n]/\0\r/g
+    %s/;\ze[^\r\n]/;\r/g
+    %s/[^\s]\zs[=&|]\+\ze[^\s]/ \0 /g
+    normal ggVG=
+endfunction
