@@ -1,6 +1,6 @@
 " Load all plugins now.
 execute pathogen#infect()
-colorscheme solarized8_flat
+" colorscheme solarized8_flat
 "execute pathogen#helptags()
 " from https://stackoverflow.com/questions/33380451/is-there-a-difference-between-syntax-on-and-syntax-enable-in-vimscript
 filetype plugin indent on
