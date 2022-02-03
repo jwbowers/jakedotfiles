@@ -114,7 +114,7 @@ export VIRTUALENVWRAPPER_PYTHON=/usr/local/bin/python3
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # plugins=(git osx svn brew)
-plugins=(brew git osx history history-substring-search svn tmux tmuxinator github zsh-syntax-highlighting vi-mode virtualenv virtualenvwrapper)
+plugins=(brew git macos history history-substring-search svn tmux tmuxinator github zsh-syntax-highlighting vi-mode virtualenv virtualenvwrapper)
 
 # User configuration
 
@@ -124,8 +124,8 @@ export PATH="/usr/local/opt/python/libexec/bin:/usr/local/bin:/usr/bin:/bin:/usr
 export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
 export PATH="$HOME/.poetry/bin:$PATH"
 export PATH="$(python3 -m site --user-base)/bin:${PATH}"
-
-export HOMEBREW_GITHUB_API_TOKEN="e70293b66d4b7362c661604117c42e7e175be825"
+export PATH=$PATH:$HOME/go/bin
+export HOMEBREW_GITHUB_API_TOKEN="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"
 
 source $ZSH/oh-my-zsh.sh
 
@@ -160,8 +160,35 @@ setopt    incappendhistory  #Immediately append to the history file, not just wh
 ## unset __conda_setup
 ## # <<< conda initialize <<<
 
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+### activating zsh-completions
+#
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+    autoload -Uz compinit
+    compinit
+fi
+
+# use exa for ls
+# brew install exa
+#alias ll="ls -l"
+TREE_IGNORE="cache|log|logs|node_modules|vendor"
+alias ls=' exa --group-directories-first'
+alias la=' ls -a'
+alias ll=' ls --git -l'
+alias lt=' ls --tree -L 2 -I ${TREE_IGNORE}'
+alias ltt=' ls --tree -L 3 -I ${TREE_IGNORE}'
+alias lt1='exa -r -snew -l'
+# use bat
+# brew install bat
+alias cat='bat'
+
+# use duf
+# brew install duf
+alias duf

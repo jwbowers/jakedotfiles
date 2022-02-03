@@ -1,0 +1,26 @@
+{
+    "suggest.autoTrigger": "none",
+    "diagnostic-languageserver.filetypes": {
+        "text": ["proselint"],
+        "markdown": [ "proselint", "write-good" ],
+        "md": [ "proselint", "write-good" ],
+        "tex": [ "proselint", "write-good" ],
+        "latex": [ "proselint", "write-good" ],
+        "sh": "shellcheck"
+    },
+    "markdownlint.config": {
+        "default": true,
+        "MD007": { "indent": 4 },
+        "MD012":  false,
+        "MD013":  false,
+        "MD025":  false
+    },
+    "clangd.path": "/Users/jwbowers/.config/coc/extensions/coc-clangd-data/install/12.0.0/clangd_12.0.0/bin/clangd" //,
+     // "languageserver": {
+     //     "R": {
+     //         "command": "/usr/local/bin/R",
+     //         "args" : [ "--slave", "-e", "languageserver::run()"],
+     //         "filetypes" : ["r"]
+     //     }
+     // }
+}
